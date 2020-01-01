@@ -8,7 +8,7 @@ vk.get_api()
 longpoll = VkLongPoll(vk, wait=86400)
 
 # Подключение к .bd
-conn = sqlite3.connect("/root/nekki_bd/Nekki.bd")
+conn = sqlite3.connect("./Nekki_database/Nekki.bd")
 cursor = conn.cursor()
 
 # Шаблоны
