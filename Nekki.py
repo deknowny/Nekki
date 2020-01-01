@@ -446,10 +446,9 @@ for event in longpoll.listen():
 
                                         elif sep(1)[1] == "пользователей" or sep(1)[1] == "users":
 
-                                            members = vk.method("messages.getConversationsById", {
+                                            members = vk.method("messages.getConversationMembers", {
                                                 "peer_id": event.object.peer_id,
-                                                "fields": "sex",
-                                                'extended': True
+                                                "fields": "sex"
                                             })
 
                                             for i in members["profiles"]:
@@ -484,23 +483,23 @@ for event in longpoll.listen():
 
                                                         up_bd("UPDATE persons SET in_chat = ? WHERE user_id = ?;", 0, get_id(i))
 
-                                                        ms("Значение {} изменено на <Вышедший>".format(mention(get_id(i), "Пользователя")))
+                                                        ms("✓ Значение {} изменено на <Вышедший>".format(mention(get_id(i), "Пользователя")))
 
                                                 
                                             elif len(com) == 2:
 
                                                 up_bd("UPDATE persons SET in_chat = ?;", 0)
 
-                                                resp =  vk.method("messages.getConversationsById", {
+                                                resp =  vk.method("messages.getConversationMembers", {
                                                     "peer_id": event.object.peer_id,
-                                                    "fields": "sex",
-                                                    'extended': True
+                                                    "fields": "sex"
                                                     })
 
-                                                for i in res['profiles']:
+                                                for i in resp['profiles']:
 
-                                                    up_bd("UPDATE persons SET in_chat = ? WHERE user_id = ?;", i['id'])
+                                                    up_bd("UPDATE persons SET in_chat = ? WHERE user_id = ?;", 1, i['id'])
 
+                                                ms("✓ Вышедшие пользователи обновлены")
 
                                             pe_update()
 
